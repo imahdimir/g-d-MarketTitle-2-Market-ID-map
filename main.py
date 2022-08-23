@@ -34,11 +34,11 @@ def main() :
   ##
   df = df[[mktitle, mktid]]
   ##
-  df = df.applymap(norm)
-  ##
   df = df.sort_values([mktid, mktitle])
   ##
   df = df.drop_duplicates()
+  ##
+  assert df[mktitle].is_unique
   ##
   ufm_repo = GithubData(uniq_fmarkets_repo_url)
   ufm_repo.clone()
