@@ -24,10 +24,10 @@ def main() :
   pass
 
   ##
-  ufm = GithubData(map_repo_url)
-  ufm.clone()
+  rp = GithubData(map_repo_url)
+  rp.clone()
   ##
-  fpn = ufm.data_filepath
+  fpn = rp.data_filepath
   ##
   df = rdata(fpn)
   ##
@@ -44,9 +44,9 @@ def main() :
   commit_msg = 'sorted'
   commit_msg += f' by repo: {cur_module_repo}'
 
-  ufm.commit_push(commit_msg)
+  rp.commit_push(commit_msg)
   ##
-  ufm.rmdir()
+  rp.rmdir()
 
   ##
 
