@@ -13,6 +13,7 @@ from mirutil.funcs import read_data_according_to_type as rdata
 
 
 map_repo_url = 'https://github.com/imahdimir/d-MarketTitle-2-MarketId'
+uniq_fmarkets_repo_url = 'https://github.com/imahdimir/d-uniq-Final-Markets'
 cur_module_repo = 'https://github.com/imahdimir/gov-d-MarketTitle-2-MarketId'
 
 mktitle = 'MarketTitle'
@@ -39,6 +40,16 @@ def main() :
   ##
   df = df.drop_duplicates()
   ##
+  ufm_repo = GithubData(uniq_fmarkets_repo_url)
+  ufm_repo.clone()
+  ##
+  udfpn = ufm_repo.data_filepath
+  udf = rdata(udfpn)
+  ##
+  df1 = df[[mktid]].dropna()
+  ##
+  assert df1[mktid].isin(udf[mktid]).all()
+  ##
   sxl(df , fpn)
   ##
   commit_msg = 'sorted'
@@ -47,6 +58,7 @@ def main() :
   rp.commit_push(commit_msg)
   ##
   rp.rmdir()
+  ufm_repo.rmdir()
 
   ##
 
