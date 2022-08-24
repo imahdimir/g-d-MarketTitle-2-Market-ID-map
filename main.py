@@ -7,7 +7,6 @@
 ##
 
 from githubdata import GithubData
-from mirutil.funcs import norm_fa_str as norm
 from mirutil.funcs import save_df_as_a_nice_xl as sxl
 from mirutil.funcs import read_data_according_to_type as rdata
 
@@ -40,6 +39,7 @@ def main() :
   ##
   assert df[mktitle].is_unique
   ##
+
   ufm_repo = GithubData(uniq_fmarkets_repo_url)
   ufm_repo.clone()
   ##
