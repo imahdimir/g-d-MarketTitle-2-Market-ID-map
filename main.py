@@ -1,49 +1,42 @@
 ##
 
-"""
-
-  """
-
-##
 
 from githubdata import GithubData
-from mirutil.funcs import save_df_as_a_nice_xl as sxl
-from mirutil.funcs import read_data_according_to_type as rdata
+from mirutil.df_utils import save_df_as_a_nice_xl as sxl
+from mirutil.df_utils import read_data_according_to_type as rdata
 
 
-map_repo_url = 'https://github.com/imahdimir/d-MarketTitle-2-MarketId'
-uniq_fmarkets_repo_url = 'https://github.com/imahdimir/d-uniq-Final-Markets'
-cur_module_repo = 'https://github.com/imahdimir/gov-d-MarketTitle-2-MarketId'
+rp_url = 'https://github.com/imahdimir/d-MarketTitle-2-Market-ID-map'
+mkts_rp_url = 'https://github.com/imahdimir/d-Market-ID'
 
 mktitle = 'MarketTitle'
 mktid = 'MarketId'
 
+
 def main() :
-
-
   pass
 
   ##
-  rp = GithubData(map_repo_url)
+  rp = GithubData(rp_url)
   rp.clone()
   ##
-  fpn = rp.data_filepath
+  cur_module_repo = 'https://github.com/' + rp.usr + '/gov-' + rp.repo_name
   ##
+  fpn = rp.data_filepath
   df = rdata(fpn)
   ##
-  df = df[[mktitle, mktid]]
+  df = df[[mktitle , mktid]]
   ##
-  df = df.sort_values([mktid, mktitle])
+  df = df.sort_values([mktid , mktitle])
   ##
   df = df.drop_duplicates()
   ##
   assert df[mktitle].is_unique
   ##
-
-  ufm_repo = GithubData(uniq_fmarkets_repo_url)
-  ufm_repo.clone()
+  mkts_rp = GithubData(mkts_rp_url)
+  mkts_rp.clone()
   ##
-  udfpn = ufm_repo.data_filepath
+  udfpn = mkts_rp.data_filepath
   udf = rdata(udfpn)
   ##
   df1 = df[[mktid]].dropna()
@@ -52,14 +45,17 @@ def main() :
   ##
   sxl(df , fpn)
   ##
-  commit_msg = 'sorted'
+  commit_msg = 'checked'
   commit_msg += f' by repo: {cur_module_repo}'
 
   rp.commit_push(commit_msg)
   ##
   rp.rmdir()
-  ufm_repo.rmdir()
+  mkts_rp.rmdir()
 
   ##
+
+
+##
 
 ##
